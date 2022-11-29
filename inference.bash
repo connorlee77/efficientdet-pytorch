@@ -1,0 +1,2 @@
+export CUDA_VISIBLE_DEVICES=1
+python inference.py root='' --dataset=flir_v2 --model efficientdetv2_ds --workers 1 --checkpoint output/train/20221004-014144-efficientdetv2_ds/checkpoint-3.pth.tar --num-classes=80 -b 1

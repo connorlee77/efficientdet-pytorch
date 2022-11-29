@@ -231,7 +231,7 @@ def get_clip_parameters(model, exclude_head=False):
 def main():
     setup_default_logging()
     args, args_text = _parse_args()
-
+    print(args)
     args.pretrained_backbone = not args.no_pretrained_backbone
     args.prefetcher = not args.no_prefetcher
     args.distributed = False

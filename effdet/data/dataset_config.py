@@ -16,6 +16,33 @@ class CocoCfg:
 
 
 @dataclass
+class FlirV2Cfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/images_thermal_train/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/images_thermal_train', has_labels=True),
+        val=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/images_thermal_val/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/images_thermal_val', has_labels=True),
+        test=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/video_thermal_test/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/video_thermal_test', has_labels=True),
+    ))
+
+@dataclass
+class FlirV2RGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/images_rgb_train/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/images_rgb_train', has_labels=True),
+        val=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/images_rgb_val/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/images_rgb_val', has_labels=True),
+        test=dict(ann_filename='/home/carson/data/FLIR_ADAS_v2/video_rgb_test/coco.json', img_dir='/home/carson/data/FLIR_ADAS_v2/video_rgb_test', has_labels=True),
+    ))
+
+@dataclass
+class FlirAlignedCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_train/coco.json', img_dir='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_train/data', has_labels=True),
+        val=dict(ann_filename='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_val/flir.json', img_dir='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_val/data', has_labels=True)
+    ))
+
+
+@dataclass
 class Coco2017Cfg(CocoCfg):
     variant: str = '2017'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(

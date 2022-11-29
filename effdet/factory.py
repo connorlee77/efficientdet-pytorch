@@ -37,14 +37,17 @@ def create_model_from_config(
 
     # pretrained weights are always spec'd for original config, load them before we change the model
     if pretrained:
+        print('loading pretrained model from {}...'.format(config.url))
         load_pretrained(model, config.url)
 
     # reset model head if num_classes doesn't match configs
     if num_classes is not None and num_classes != config.num_classes:
+        print('resetting head...')
         model.reset_head(num_classes=num_classes)
 
     # load an argument specified training checkpoint
     if checkpoint_path:
+        print('loading user specified checkpoint path...')
         load_checkpoint(model, checkpoint_path, use_ema=checkpoint_ema)
 
     # wrap model in task specific training/prediction bench if set

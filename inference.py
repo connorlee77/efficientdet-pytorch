@@ -14,6 +14,10 @@ from effdet.data import resolve_input_config
 from timm.utils import AverageMeter, setup_default_logging
 from timm.models.layers import set_layer_config
 
+import cv2
+import numpy as np
+import torchvision
+
 has_apex = False
 try:
     from apex import amp
@@ -27,8 +31,6 @@ try:
         has_native_amp = True
 except AttributeError:
     pass
-
-torch.backends.cudnn.benchmark = True
 
 
 def add_bool_arg(parser, name, default=False, help=''):  # FIXME move to utils
@@ -104,7 +106,7 @@ def validate(args):
     assert not args.apex_amp or not args.native_amp, "Only one AMP mode should be set."
     args.pretrained = args.pretrained or not args.checkpoint  # might as well try to validate something
     args.prefetcher = not args.no_prefetcher
-
+    print(args.pretrained)
     # create model
     with set_layer_config(scriptable=args.torchscript):
         extra_args = {}
@@ -165,7 +167,33 @@ def validate(args):
             with amp_autocast():
                 output = bench(input, img_info=target)
             evaluator.add_predictions(output, target)
+            # print(input.shape)
+            # print(output.shape)
+            draw_img = np.uint8(255*(input.squeeze().cpu().numpy().transpose(1, 2, 0)*0.225 + 0.519)).copy()
+            small_draw_img = cv2.resize(draw_img, (640, 640))
+            print(small_draw_img.shape)
+            for box in output.cpu().numpy().reshape(-1, 6):
+                
+                if box[4] > 0.3:
+                    x1, y1, x2, y2 = box[:4].astype(int)
+                    print(x1, y1)
+                    cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
 
+            for box in target['bbox'].cpu().numpy().reshape(-1, 4):
+                y1, x1, y2, x2 = box[:4].astype(int)
+                if -1 not in box:
+                    cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+            
+            cv2.imwrite('evalimg_rect_orig.png', small_draw_img)
+            cv2.imwrite('evalimg_rect.png', draw_img)
+            torchvision.utils.save_image(
+                        input,
+                        'evalimg.png',
+                        padding=0,
+                        normalize=True)
+
+            exit(0)
             # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
@@ -191,6 +219,7 @@ def validate(args):
 def main():
     args = parser.parse_args()
     validate(args)
+
 
 if __name__ == '__main__':
     main()

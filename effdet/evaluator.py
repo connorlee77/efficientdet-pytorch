@@ -69,7 +69,7 @@ class Evaluator:
                 if score < .001:  # stop when below this threshold, scores in descending order
                     break
                 coco_det = dict(
-                    image_id=int(img_id),
+                    image_id=img_id,
                     bbox=det[0:4].tolist(),
                     score=score,
                     category_id=int(det[5]))
@@ -191,6 +191,8 @@ class OpenImagesEvaluator(TfmEvaluator):
 def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
     # FIXME support OpenImages Challenge2019 metric w/ image level label consideration
     if 'coco' in name:
+        return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
+    if 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
         return OpenImagesEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)

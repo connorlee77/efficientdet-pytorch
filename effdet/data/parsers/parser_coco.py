@@ -91,3 +91,4 @@ class CocoParser(Parser):
             ann['bbox_ignore'] = bboxes_ignore
 
         return ann
+        

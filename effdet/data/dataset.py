@@ -7,7 +7,7 @@ import numpy as np
 
 from PIL import Image
 from .parsers import create_parser
-
+import cv2
 
 class DetectionDatset(data.Dataset):
     """`Object Detection Dataset. Use with parsers for COCO, VOC, and OpenImages.
@@ -46,7 +46,13 @@ class DetectionDatset(data.Dataset):
         img = Image.open(img_path).convert('RGB')
         if self.transform is not None:
             img, target = self.transform(img, target)
+        
+        # draw_img = img.transpose(1, 2, 0)
+        # for box in target['bbox']:
+        #     y1, x1, y2, x2 = box.astype(int)
+        #     cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
 
+        # cv2.imwrite('testimg.png', draw_img)
         return img, target
 
     def __len__(self):
