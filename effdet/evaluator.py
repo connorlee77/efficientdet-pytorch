@@ -118,7 +118,7 @@ class CocoEvaluator(Evaluator):
             coco_eval.params.imgIds = coco_ids  # score only ids we've used
             coco_eval.evaluate()
             coco_eval.accumulate()
-            coco_eval.summarize()
+            d = coco_eval.summarize()
             metric = coco_eval.stats[0]  # mAP 0.5-0.95
             if self.distributed:
                 dist.broadcast(torch.tensor(metric, device=self.distributed_device), 0)
