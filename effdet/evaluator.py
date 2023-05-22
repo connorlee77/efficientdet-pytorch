@@ -192,7 +192,9 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
     # FIXME support OpenImages Challenge2019 metric w/ image level label consideration
     if 'coco' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
-    if 'flir' in name:
+    # elif 'seeingthroughfog' in name:
+    #     return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
+    elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
         return OpenImagesEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)

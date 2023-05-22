@@ -1,0 +1,2 @@
+export CUDA_VISIBLE_DEVICES=0
+python train.py root='' --dataset=seeingthroughfog_rgb --model=tf_efficientdet_d5 --batch-size=4 --amp --lr=1e-3 --opt adam --sched plateau --num-classes=4 --save-images --workers=4 --pretrained

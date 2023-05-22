@@ -1,3 +1,6 @@
+**/*.zip
+dsf-stf/
+wandb/
 output/
 **/*.png
 **/*.jpg

@@ -1,2 +1,2 @@
 export CUDA_VISIBLE_DEVICES=1
-python inference.py root='' --dataset=flir_v2 --model efficientdetv2_ds --workers 1 --checkpoint output/train/20221004-014144-efficientdetv2_ds/checkpoint-3.pth.tar --num-classes=80 -b 1
+python inference.py root='' --dataset=seeingthroughfog_gated --model efficientdetv2_dt --workers 1 --checkpoint output/train/20230520-032933-efficientdetv2_dt/model_best.pth.tar --num-classes=4 -b 1

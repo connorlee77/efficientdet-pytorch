@@ -169,8 +169,8 @@ def validate(args):
             evaluator.add_predictions(output, target)
             # print(input.shape)
             # print(output.shape)
-            draw_img = np.uint8(255*(input.squeeze().cpu().numpy().transpose(1, 2, 0)*0.225 + 0.519)).copy()
-            small_draw_img = cv2.resize(draw_img, (640, 640))
+            draw_img = np.uint8(255*(input.squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
+            small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
             print(small_draw_img.shape)
             for box in output.cpu().numpy().reshape(-1, 6):
                 
@@ -193,7 +193,7 @@ def validate(args):
                         padding=0,
                         normalize=True)
 
-            exit(0)
+            # exit(0)
             # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()

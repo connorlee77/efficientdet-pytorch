@@ -294,7 +294,7 @@ def main():
             checkpoint_path=args.initial_checkpoint,
         )
     model_config = model.config  # grab before we obscure with DP/DDP wrappers
-
+    
     if args.local_rank == 0:
         logging.info('Model %s created, param count: %d' % (args.model, sum([m.numel() for m in model.parameters()])))
 
