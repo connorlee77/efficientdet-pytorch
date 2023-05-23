@@ -1,0 +1,5 @@
+PascalBoxes_Precision/mAP@0.7IOU: 0.8062922925562179
+PascalBoxes_PerformanceByCategory/AP@0.7IOU/LargeVehicle: 0.786087085190804
+PascalBoxes_PerformanceByCategory/AP@0.7IOU/Person: 0.7731850992171893
+PascalBoxes_PerformanceByCategory/AP@0.7IOU/Car: 0.938202266074327
+PascalBoxes_PerformanceByCategory/AP@0.7IOU/RidableVehicle: 0.7276947197425514

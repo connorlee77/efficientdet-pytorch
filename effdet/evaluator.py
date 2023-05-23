@@ -168,8 +168,12 @@ class TfmEvaluator(Evaluator):
                 # wait without spinning the cpu @ 100%, no need for low latency here
                 time.sleep(0.5)
             map_metric = map_metric.item()
-        if output_result_file:
-            self.save(output_result_file)
+        with open(output_result_file, 'w') as f:
+            for k, v in metrics.items():
+                print(f'{k}: {v}', file=f)
+
+        # if output_result_file:
+        #     self.save(output_result_file)
         self.reset()
         return map_metric
 
