@@ -141,7 +141,7 @@ class XBitDetectionDatset(data.Dataset):
         # draw_img = img.transpose(1, 2, 0)
         # for box in target['bbox']:
         #     y1, x1, y2, x2 = box.astype(int)
-        #     cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+            # cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
 
         # cv2.imwrite('testimg.png', draw_img)
         # exit(0)

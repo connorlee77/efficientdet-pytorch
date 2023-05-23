@@ -1,2 +1,2 @@
 export CUDA_VISIBLE_DEVICES=1
-python inference.py root='' --dataset=seeingthroughfog_gated --model efficientdetv2_dt --workers 1 --checkpoint output/train/20230520-032933-efficientdetv2_dt/model_best.pth.tar --num-classes=4 -b 1
+python inference.py root='' --dataset=seeingthroughfog_rgb --model tf_efficientdet_d5 --workers 1 --checkpoint output/train/20230521-213509-tf_efficientdet_d5/model_best.pth.tar --num-classes=4 -b 1

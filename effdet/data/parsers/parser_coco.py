@@ -50,10 +50,12 @@ class CocoParser(Parser):
         bboxes = []
         bboxes_ignore = []
         cls = []
-
+        difficult = []
         for i, ann in enumerate(ann_info):
+            difficulty = 0
             if ann.get('ignore', False):
-                continue
+                difficulty = 1
+
             x1, y1, w, h = ann['bbox']
             if self.include_masks and ann['area'] <= 0:
                 continue
@@ -71,13 +73,16 @@ class CocoParser(Parser):
             else:
                 bboxes.append(bbox)
                 cls.append(self.cat_id_to_label[ann['category_id']] if self.cat_id_to_label else ann['category_id'])
+                difficult.append(difficulty)
 
         if bboxes:
             bboxes = np.array(bboxes, ndmin=2, dtype=np.float32)
             cls = np.array(cls, dtype=np.int64)
+            difficult = np.array(difficult, dtype=np.int64)
         else:
             bboxes = np.zeros((0, 4), dtype=np.float32)
             cls = np.array([], dtype=np.int64)
+            difficult = np.array([], dtype=np.int64)
 
         if self.include_bboxes_ignore:
             if bboxes_ignore:
@@ -85,7 +90,7 @@ class CocoParser(Parser):
             else:
                 bboxes_ignore = np.zeros((0, 4), dtype=np.float32)
 
-        ann = dict(bbox=bboxes, cls=cls)
+        ann = dict(bbox=bboxes, cls=cls, difficult=difficult)
 
         if self.include_bboxes_ignore:
             ann['bbox_ignore'] = bboxes_ignore

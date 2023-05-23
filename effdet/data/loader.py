@@ -28,9 +28,9 @@ class DetectionFastCollate:
             max_instances=MAX_NUM_INSTANCES,
             anchor_labeler=None,
     ):
-        instance_keys = instance_keys or {'bbox', 'bbox_ignore', 'cls'}
+        instance_keys = instance_keys or {'bbox', 'bbox_ignore', 'cls', 'difficult'}
         instance_shapes = instance_shapes or dict(
-            bbox=(max_instances, 4), bbox_ignore=(max_instances, 4), cls=(max_instances,))
+            bbox=(max_instances, 4), bbox_ignore=(max_instances, 4), cls=(max_instances,), difficult=(max_instances,))
         self.instance_info = {k: dict(fill=instance_fill, shape=instance_shapes[k]) for k in instance_keys}
         self.max_instances = max_instances
         self.anchor_labeler = anchor_labeler
@@ -96,7 +96,6 @@ class DetectionFastCollate:
                 labeler_outputs['label_num_positives'][i] = num_positives
         if labeler_outputs:
             target.update(labeler_outputs)
-
         return img_tensor, target
 
 

@@ -162,11 +162,21 @@ def validate(args):
     batch_time = AverageMeter()
     end = time.time()
     last_idx = len(loader) - 1
+
+    stf_map = {
+        1 : 'LargeVehicle',
+        2 : 'Person',
+        3 : 'Car',
+        4 : 'Bike',
+    }
     with torch.no_grad():
         for i, (input, target) in enumerate(loader):
             with amp_autocast():
                 output = bench(input, img_info=target)
             evaluator.add_predictions(output, target)
+
+            log_classes = output[0,:,5].cpu().numpy().astype(int)
+            log_conf = output[0,:,4].cpu().numpy()
             # print(input.shape)
             # print(output.shape)
             draw_img = np.uint8(255*(input.squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
@@ -174,10 +184,22 @@ def validate(args):
             print(small_draw_img.shape)
             for box in output.cpu().numpy().reshape(-1, 6):
                 
-                if box[4] > 0.3:
+                if box[4] > 0.6:
                     x1, y1, x2, y2 = box[:4].astype(int)
                     print(x1, y1)
-                    cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                    cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
+
+                    conf = box[4]
+                    class_id = stf_map[box[5]]
+                    cv2.putText(
+                        small_draw_img, 
+                        '{}: {:.2f}'.format(class_id, conf), 
+                        (x1, y1 - 10), 
+                        fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                        fontScale=1,
+                        color=(255, 0, 255),
+                        thickness=2,
+                    )
 
             for box in target['bbox'].cpu().numpy().reshape(-1, 4):
                 y1, x1, y2, x2 = box[:4].astype(int)
