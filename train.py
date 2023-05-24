@@ -63,6 +63,9 @@ parser.add_argument('--dataset', default='coco', type=str, metavar='DATASET',
                     help='Name of dataset to train (default: "coco"')
 parser.add_argument('--model', default='tf_efficientdet_d1', type=str, metavar='MODEL',
                     help='Name of model to train (default: "tf_efficientdet_d1"')
+
+parser.add_argument('--image-size', type=int, default=None, help='input image size')
+
 add_bool_arg(parser, 'redundant-bias', default=None, help='override model config for redundant bias')
 add_bool_arg(parser, 'soft-nms', default=None, help='override model config for soft-nms')
 parser.add_argument('--val-skip', type=int, default=0, metavar='N',
@@ -292,6 +295,7 @@ def main():
             soft_nms=args.soft_nms,
             bench_labeler=args.bench_labeler,
             checkpoint_path=args.initial_checkpoint,
+            image_size=args.image_size
         )
     model_config = model.config  # grab before we obscure with DP/DDP wrappers
     

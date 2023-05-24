@@ -168,9 +168,11 @@ class TfmEvaluator(Evaluator):
                 # wait without spinning the cpu @ 100%, no need for low latency here
                 time.sleep(0.5)
             map_metric = map_metric.item()
-        with open(output_result_file, 'w') as f:
-            for k, v in metrics.items():
-                print(f'{k}: {v}', file=f)
+
+        if output_result_file:
+            with open(output_result_file, 'w') as f:
+                for k, v in metrics.items():
+                    print(f'{k}: {v}', file=f)
 
         # if output_result_file:
         #     self.save(output_result_file)
@@ -196,7 +198,7 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
     # FIXME support OpenImages Challenge2019 metric w/ image level label consideration
     if 'coco' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
-    # elif 'seeingthroughfog' in name:
+    # elif 'seeingthroughfog' in name: # stf uses kitti, which is based on pascal voc
     #     return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
