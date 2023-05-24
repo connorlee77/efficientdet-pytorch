@@ -200,6 +200,8 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     # elif 'seeingthroughfog' in name: # stf uses kitti, which is based on pascal voc
     #     return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
+    elif 'm3fd' in name:
+        return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
