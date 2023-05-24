@@ -191,6 +191,23 @@ class SeeingThroughFogGatedHardCfg(CocoCfg):
     ))
 
 
+@dataclass
+class M3fdRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-train.json', img_dir='/home/carson/data/m3fd/Vis', has_labels=True),
+        val=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-val.json', img_dir='/home/carson/data/m3fd/Vis', has_labels=True),
+        test=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-test.json', img_dir='/home/carson/data/m3fd/Vis', has_labels=True)
+    ))
+
+@dataclass
+class M3fdThermalCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-train.json', img_dir='/home/carson/data/m3fd/Ir', has_labels=True),
+        val=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-val.json', img_dir='/home/carson/data/m3fd/Ir', has_labels=True),
+        test=dict(ann_filename='/home/carson/data/m3fd/meta/m3fd-test.json', img_dir='/home/carson/data/m3fd/Ir', has_labels=True)
+    ))
 
 @dataclass
 class FlirV2Cfg(CocoCfg):

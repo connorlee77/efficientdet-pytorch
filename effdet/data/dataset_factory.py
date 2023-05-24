@@ -237,6 +237,40 @@ def create_dataset(name, root, splits=('train', 'val')):
                 mean = [0.20945697, 0.20945697, 0.20945697], 
                 std = [0.15437697, 0.15437697, 0.15437697],
             )
+  
+    elif name == 'm3fd_rgb': 
+        dataset_cfg = M3fdRGBCfg()
+        for s in splits:
+            if s not in dataset_cfg.splits:
+                raise RuntimeError(f'{s} split not found in config')
+            split_cfg = dataset_cfg.splits[s]
+            ann_file = root / split_cfg['ann_filename']
+            parser_cfg = CocoParserCfg(
+                ann_filename=ann_file,
+                has_labels=split_cfg['has_labels']
+            )
+
+            datasets[s] = dataset_cls(
+                data_dir=root / Path(split_cfg['img_dir']),
+                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
+            )
+
+    elif name == 'm3fd_thermal': 
+        dataset_cfg = M3fdThermalCfg()
+        for s in splits:
+            if s not in dataset_cfg.splits:
+                raise RuntimeError(f'{s} split not found in config')
+            split_cfg = dataset_cfg.splits[s]
+            ann_file = root / split_cfg['ann_filename']
+            parser_cfg = CocoParserCfg(
+                ann_filename=ann_file,
+                has_labels=split_cfg['has_labels']
+            )
+
+            datasets[s] = dataset_cls(
+                data_dir=root / Path(split_cfg['img_dir']),
+                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
+            )
 
     elif name == 'flir_aligned': 
         dataset_cfg = FlirAlignedCfg()
