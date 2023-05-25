@@ -41,8 +41,11 @@ class SeeingThroughFogRGBEasyCfg(CocoCfg):
         val=dict(
             ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/val_clear.json'), 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+        # test=dict(
+        #     ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
+        #     img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
+            ann_filename='/home/connor/cv_conversions/stf_labels/easy/all/test_clear.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         lightfog=dict(
             ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/light_fog.json'), 
@@ -128,8 +131,11 @@ class SeeingThroughFogGatedEasyCfg(CocoCfg):
         val=dict(
             ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/val_clear.json'), 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+        # test=dict(
+        #     ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
+        #     img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
+            ann_filename='/home/connor/cv_conversions/stf_labels/easy/all/test_clear.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         lightfog=dict(
             ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/light_fog.json'), 

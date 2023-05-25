@@ -16,6 +16,7 @@ from .distributed import synchronize, is_main_process, all_gather_container
 #import pyximport; py_importer, pyx_importer = pyximport.install(pyimport=True)
 import effdet.evaluation.detection_evaluator as tfm_eval
 #pyximport.uninstall(py_importer, pyx_importer)
+from effdet.kitti_eval import kitti_eval
 
 _logger = logging.getLogger(__name__)
 
@@ -192,7 +193,104 @@ class OpenImagesEvaluator(TfmEvaluator):
     def __init__(self, dataset, distributed=False, pred_yxyx=False):
         super().__init__(
             dataset, distributed=distributed, pred_yxyx=pred_yxyx, evaluator_cls=tfm_eval.OpenImagesDetectionEvaluator)
+        
 
+class KittiEvaluator(Evaluator):
+
+    STF_MAP = {
+        -1 : 'Background',
+        0 : 'DontCare',
+        1 : 'LargeVehicle',
+        2 : 'Person',
+        3 : 'Car',
+        4 : 'Bike',
+    }
+
+    def __init__(self, dataset, distributed=False, pred_yxyx=False):
+        super().__init__(distributed=distributed, pred_yxyx=pred_yxyx)
+        self.dataset = dataset
+        self.gt = []
+        self.detections = []
+
+    def add_ground_truth_anno(self, target):
+        B, L = target['cls'].shape[0:2]
+        
+        # y1, x1, y2, x2
+        coco_bbox = target['bbox'].cpu().numpy()
+        coco_bbox = coco_bbox[:,:,[1, 0, 3, 2]]
+        
+        for i in range(B):
+
+            annotations = {
+                'name': [],
+                'truncated': [],
+                'occluded': [],
+                'alpha': [],
+                'bbox': [],
+                'dimensions': [],
+                'location': [],
+                'rotation_y': []
+            }
+
+            annotations['name'] = [self.STF_MAP[idx] for idx in target['cls'][i].cpu().numpy()]
+            annotations['truncated'] = target['truncated'][i].cpu().numpy()
+            annotations['occluded'] = target['occluded'][i].cpu().numpy()
+            annotations['alpha'] = np.zeros(L)
+            annotations['bbox'] = coco_bbox[i]
+            annotations['dimensions'] = np.zeros((L, 3))
+            annotations['location'] = np.zeros((L, 3))
+            annotations['rotation_y'] = np.zeros(L)
+            annotations['score'] = np.zeros(L)
+
+            self.gt.append(annotations)
+
+    def add_detections(self, detections):
+        B, L, W = detections.shape
+
+        detections = detections.cpu().numpy()
+        for i in range(B):
+
+            pred = {
+                'name': [],
+                'truncated': [],
+                'occluded': [],
+                'alpha': [],
+                'bbox': [],
+                'dimensions': [],
+                'location': [],
+                'rotation_y': []
+            }
+
+            pred['name'] = [self.STF_MAP[idx] for idx in detections[i,:,5]] 
+            pred['truncated'] = np.zeros(L)
+            pred['occluded'] = np.zeros(L)
+            pred['alpha'] = np.zeros(L)
+            pred['bbox'] = detections[i,:,:4]
+            pred['dimensions'] = np.zeros((L, 3))
+            pred['location'] = np.zeros((L, 3))
+            pred['rotation_y'] = np.zeros(L)
+            pred['score'] = detections[i,:,4]
+
+            self.detections.append(pred)
+
+    def add_predictions(self, detections, target):        
+        self.add_ground_truth_anno(target)
+        self.add_detections(detections)
+
+    def evaluate(self):
+        # 1 : 'LargeVehicle',
+        # 2 : 'Person',
+        # 3 : 'Car',
+        # 4 : 'Bike',
+
+        result, ret_dict = kitti_eval(
+            self.gt, 
+            self.detections, 
+            current_classes=['Car'], 
+            eval_types=['bbox']
+        )
+        print(result)
+        print(ret_dict)
 
 def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
     # FIXME support OpenImages Challenge2019 metric w/ image level label consideration
@@ -204,6 +302,8 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
+    elif 'seeingthroughfog' in name:
+        return KittiEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
         return OpenImagesEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     else:
