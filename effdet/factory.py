@@ -6,17 +6,17 @@ from .helpers import load_pretrained, load_checkpoint
 
 def create_model(
         model_name, bench_task='', num_classes=None, pretrained=False,
-        checkpoint_path='', checkpoint_ema=False, image_size=None, **kwargs):
+        checkpoint_path='', checkpoint_ema=False, **kwargs):
 
     config = get_efficientdet_config(model_name)
     return create_model_from_config(
         config, bench_task=bench_task, num_classes=num_classes, pretrained=pretrained,
-        checkpoint_path=checkpoint_path, checkpoint_ema=checkpoint_ema, image_size=image_size, **kwargs)
+        checkpoint_path=checkpoint_path, checkpoint_ema=checkpoint_ema, **kwargs)
 
 
 def create_model_from_config(
         config, bench_task='', num_classes=None, pretrained=False,
-        checkpoint_path='', checkpoint_ema=False, image_size=None, **kwargs):
+        checkpoint_path='', checkpoint_ema=False, **kwargs):
 
     pretrained_backbone = kwargs.pop('pretrained_backbone', True)
     if pretrained or checkpoint_path:
@@ -32,9 +32,9 @@ def create_model_from_config(
 
     labeler = kwargs.pop('bench_labeler', False)
 
-    if image_size is not None:
-        config.update({'image_size': (image_size, image_size)})
-        print('Updating image size to {}'.format(image_size))
+    # if image_size is not None:
+    #     config.update({'image_size': (image_size, image_size)})
+    #     print('Updating image size to {}'.format(image_size))
     # create the base model
     model = EfficientDet(config, pretrained_backbone=pretrained_backbone, **kwargs)
 

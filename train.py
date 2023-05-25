@@ -282,6 +282,9 @@ def main():
     random_seed(args.seed, args.rank)
 
     with set_layer_config(scriptable=args.torchscript):
+        extra_args = {}
+        if args.image_size is not None:
+            extra_args = dict(image_size=(args.image_size, args.image_size))
         model = create_model(
             args.model,
             bench_task='train',
@@ -295,7 +298,7 @@ def main():
             soft_nms=args.soft_nms,
             bench_labeler=args.bench_labeler,
             checkpoint_path=args.initial_checkpoint,
-            image_size=args.image_size
+            **extra_args,
         )
     model_config = model.config  # grab before we obscure with DP/DDP wrappers
     

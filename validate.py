@@ -8,7 +8,9 @@ import time
 import torch
 import torch.nn.parallel
 from contextlib import suppress
-
+import numpy as np
+import cv2
+import torchvision
 from effdet import create_model, create_evaluator, create_dataset, create_loader
 from effdet.data import resolve_input_config
 from timm.utils import AverageMeter, setup_default_logging
@@ -92,6 +94,8 @@ parser.add_argument('--torchscript', dest='torchscript', action='store_true',
 parser.add_argument('--results', default='', type=str, metavar='FILENAME',
                     help='JSON filename for evaluation results')
 
+parser.add_argument('--kitti-eval', action='store_true', help='Use for Seeing Through Fog eval')
+
 
 def validate(args):
     setup_default_logging()
@@ -110,6 +114,7 @@ def validate(args):
         extra_args = {}
         if args.img_size is not None:
             extra_args = dict(image_size=(args.img_size, args.img_size))
+        print(extra_args)
         bench = create_model(
             args.model,
             bench_task='predict',
@@ -154,7 +159,12 @@ def validate(args):
         std=input_config['std'],
         num_workers=args.workers,
         pin_mem=args.pin_mem)
-
+    stf_map = {
+        1 : 'LargeVehicle',
+        2 : 'Person',
+        3 : 'Car',
+        4 : 'Bike',
+    }
     evaluator = create_evaluator(args.dataset, dataset, pred_yxyx=False)
     bench.eval()
     batch_time = AverageMeter()
@@ -162,9 +172,45 @@ def validate(args):
     last_idx = len(loader) - 1
     with torch.no_grad():
         for i, (input, target) in enumerate(loader):
+            # if i > 2:
+            #     break
             with amp_autocast():
                 output = bench(input, img_info=target)
             evaluator.add_predictions(output, target)
+
+            # draw_img = np.uint8(255*(input[0].squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
+            # small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
+            # for box in output.cpu().numpy().reshape(-1, 6):
+                
+            #     if box[4] > 0.6:
+            #         x1, y1, x2, y2 = box[:4].astype(int)
+            #         cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
+
+            #         conf = box[4]
+            #         class_id = stf_map[box[5]]
+            #         cv2.putText(
+            #             small_draw_img, 
+            #             '{}: {:.2f}'.format(class_id, conf), 
+            #             (x1, y1 - 10), 
+            #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            #             fontScale=1,
+            #             color=(255, 0, 255),
+            #             thickness=2,
+            #         )
+
+            # for box in target['bbox'][0].cpu().numpy().reshape(-1, 4):
+            #     y1, x1, y2, x2 = box[:4].astype(int)
+            #     if -1 not in box:
+            #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+            
+            # cv2.imwrite('evalimg_rect_orig.png', small_draw_img)
+            # cv2.imwrite('evalimg_rect.png', draw_img)
+            # torchvision.utils.save_image(
+            #             input,
+            #             'evalimg.png',
+            #             padding=0,
+            #             normalize=True)
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -181,7 +227,7 @@ def validate(args):
 
     mean_ap = 0.
     if dataset.parser.has_labels:
-        mean_ap = evaluator.evaluate(output_result_file=args.results)
+        mean_ap = evaluator.evaluate()
     else:
         evaluator.save(args.results)
 
