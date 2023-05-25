@@ -22,16 +22,42 @@ def calc_stats(images_dir, bits):
         
     print(mean / i, std / i)
 
-dataset = 'cam_stereo_left_rect_aligned'
-images_dir ='/data/SeeingThroughFogDerived/rgb_gated_aligned/{}'.format(dataset)
-bits = 12
+def calc_stats(images_dir, bits):
+    mean = np.zeros(3)
+    std = np.zeros(3)
+
+    files = glob.glob(os.path.join(images_dir, '*'))
+    i = 0
+    for fp in tqdm.tqdm(list(files)):
+
+        img = cv2.imread(fp, -1) / (2**bits - 1)
+        mean += img.mean(axis=(0, 1)).squeeze()
+        std += img.std(axis=(0, 1)).squeeze()
+        i += 1
+        
+    print(mean / i, std / i)
+
+# dataset = 'cam_stereo_left_rect_aligned'
+# images_dir ='/data/SeeingThroughFogDerived/rgb_gated_aligned/{}'.format(dataset)
+# bits = 12
+
+# calc_stats(images_dir, bits)
+
+
+# dataset = 'gated_full_acc_rect_aligned'
+# images_dir ='/data/SeeingThroughFogDerived/rgb_gated_aligned/{}'.format(dataset)
+# bits = 10
+
+# calc_stats(images_dir, bits)
+
+images_dir = '/home/ganlu/workspace/FLIR_Aligned/images_thermal_train/data'
+bits = 8
 
 calc_stats(images_dir, bits)
 
 
-dataset = 'gated_full_acc_rect_aligned'
-images_dir ='/data/SeeingThroughFogDerived/rgb_gated_aligned/{}'.format(dataset)
-bits = 10
+images_dir = '/home/ganlu/workspace/FLIR_Aligned/images_rgb_train/data'
+bits = 8
 
 calc_stats(images_dir, bits)
 

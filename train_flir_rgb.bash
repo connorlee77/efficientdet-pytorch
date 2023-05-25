@@ -1,0 +1,2 @@
+export CUDA_VISIBLE_DEVICES=0
+python train.py root='' --dataset=flir_aligned_rgb --model=efficientdetv2_dt --batch-size=32 --amp --lr=1e-3 --opt adam --sched plateau --num-classes=3 --save-images --workers=8 --pretrained --mean 0.62721553 0.63597459 0.62891984 --std 0.16723704 0.17459581 0.18347738
