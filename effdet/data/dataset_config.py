@@ -246,8 +246,8 @@ class FlirAlignedThermalCfg(CocoCfg):
             ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir_val.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/data'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/flir.json'), 
-            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/data'), has_labels=True)
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/flir.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/data'), has_labels=True)
     ))
 
 @dataclass
