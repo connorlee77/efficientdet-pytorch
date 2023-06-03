@@ -8,6 +8,8 @@ from typing import Dict
 
 # This is where all the data is. Place json folder in this directory
 SEEING_THROUGH_FOG_DATA_DIR = '/data/SeeingThroughFogDerived/rgb_gated_aligned/'
+FLIR_ALIGNED_DATA_DIR = "/home/ganlu/workspace/FLIR_Aligned/"
+
 
 @dataclass
 class CocoCfg:
@@ -234,11 +236,33 @@ class FlirV2RGBCfg(CocoCfg):
     ))
 
 @dataclass
-class FlirAlignedCfg(CocoCfg):
+class FlirAlignedThermalCfg(CocoCfg):
     variant: str = ''
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(ann_filename='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_train/coco.json', img_dir='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_train/data', has_labels=True),
-        val=dict(ann_filename='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_val/flir.json', img_dir='/home/carson/data/FLIR/FLIR_Aligned/images_thermal_val/data', has_labels=True)
+        train=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir_train.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/data'), has_labels=True),
+        val=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir_val.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/data'), has_labels=True),
+        test=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/flir.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/data'), has_labels=True)
+    ))
+
+@dataclass
+class FlirAlignedRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/flir_train.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
+        val=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/flir_val.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
+        test=dict(
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/flir.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/data'), has_labels=True)
     ))
 
 
