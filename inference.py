@@ -184,7 +184,7 @@ def validate(args):
             print(small_draw_img.shape)
             for box in output.cpu().numpy().reshape(-1, 6):
                 
-                if box[4] > 0.6:
+                if box[4] > 0.6 and box[5] == 3:
                     x1, y1, x2, y2 = box[:4].astype(int)
                     print(x1, y1)
                     cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
@@ -204,11 +204,11 @@ def validate(args):
             for box in target['bbox'].cpu().numpy().reshape(-1, 4):
                 y1, x1, y2, x2 = box[:4].astype(int)
                 if -1 not in box:
-                    cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                    cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
             
             cv2.imwrite('evalimg_rect_orig.png', small_draw_img)
-            cv2.imwrite('evalimg_rect.png', draw_img)
+            # cv2.imwrite('evalimg_rect.png', draw_img)
             torchvision.utils.save_image(
                         input,
                         'evalimg.png',

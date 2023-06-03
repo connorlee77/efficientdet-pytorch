@@ -180,7 +180,7 @@ def validate(args):
 
             # draw_img = np.uint8(255*(input[0].squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
             # small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
-            # for box in output.cpu().numpy().reshape(-1, 6):
+            # for box in output[0].cpu().numpy().reshape(-1, 6):
                 
             #     if box[4] > 0.6:
             #         x1, y1, x2, y2 = box[:4].astype(int)

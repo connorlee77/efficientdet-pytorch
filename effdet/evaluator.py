@@ -204,6 +204,7 @@ class KittiEvaluator(Evaluator):
         2 : 'Person',
         3 : 'Car',
         4 : 'Bike',
+        5 : 'PassengerCar_is_group',
     }
 
     def __init__(self, dataset, distributed=False, pred_yxyx=False):

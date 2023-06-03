@@ -44,15 +44,15 @@ def clean_data(gt_anno, dt_anno, current_class, difficulty):
         valid_class = -1
         if (gt_name == current_cls_name):
             valid_class = 1
-        elif (current_cls_name == 'Pedestrian'.lower()
-              and 'Person_sitting'.lower() == gt_name):
-            valid_class = 0
-            print('hit person')
-        elif (current_cls_name == 'Car'.lower() and 'Van'.lower() == gt_name):
-            valid_class = 0
-            print('hit car/van')
-        else:
-            valid_class = -1
+        # elif (current_cls_name == 'Pedestrian'.lower()
+        #       and 'Person_sitting'.lower() == gt_name):
+        #     valid_class = 0
+        #     print('hit person')
+        # elif (current_cls_name == 'Car'.lower() and 'Van'.lower() == gt_name):
+        #     valid_class = 0
+        #     print('hit car/van')
+        # else:
+        #     valid_class = -1
         ignore = False
         if ((gt_anno['occluded'][i] > MAX_OCCLUSION[difficulty])
                 or (gt_anno['truncated'][i] > MAX_TRUNCATION[difficulty])
@@ -67,7 +67,7 @@ def clean_data(gt_anno, dt_anno, current_class, difficulty):
         else:
             ignored_gt.append(-1)
     # for i in range(num_gt):
-        if gt_anno['name'][i] == 'DontCare':
+        if gt_anno['name'][i] == 'DontCare' or (gt_anno['name'][i] == 'PassengerCar_is_group' and current_cls_name == 'Car'):
             dc_bboxes.append(gt_anno['bbox'][i])
     for i in range(num_dt):
         if (dt_anno['name'][i].lower() == current_cls_name):
@@ -648,7 +648,7 @@ def kitti_eval(gt_annos,
     overlap_0_7 = np.array([[0.7, 0.5, 0.5, 0.7, 0.5], 
                             [0.7, 0.5, 0.5, 0.7, 0.5],
                             [0.7, 0.5, 0.5, 0.7, 0.5]])
-    overlap_0_5 = np.array([[0.7, 0.5, 0.5, 0.7, 0.5],
+    overlap_0_5 = np.array([[0.5, 0.5, 0.5, 0.7, 0.5],
                             [0.5, 0.25, 0.25, 0.5, 0.25],
                             [0.5, 0.25, 0.25, 0.5, 0.25]])
     min_overlaps = np.stack([overlap_0_7, overlap_0_5], axis=0)  # [2, 3, 5]

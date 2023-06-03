@@ -1,2 +1,2 @@
 export CUDA_VISIBLE_DEVICES=1
-python inference.py root='' --dataset=seeingthroughfog_rgb --model efficientdetv2_dt --workers 1 --checkpoint output/train/20230524-010421-efficientdetv2_dt/model_best.pth.tar --num-classes=4 -b 1 --img-size 1280
+python inference.py root='' --dataset=seeingthroughfog_rgb_easy --model efficientdetv2_dt --workers 1 --checkpoint output/train/20230524-010421-efficientdetv2_dt/model_best.pth.tar --num-classes=4 -b 1 --img-size 1280 --split test
