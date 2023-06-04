@@ -126,69 +126,6 @@ def create_dataset(name, root, splits=('train', 'val')):
                 mean = [0.26694615, 0.26693442, 0.26698295], 
                 std = [0.12035122, 0.12039929, 0.12037755],
             )
-    elif name == 'seeingthroughfog_rgb_easy': 
-        dataset_cfg = SeeingThroughFogRGBEasyCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-            print(ann_file)
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=12,
-                mean = [0.26694615, 0.26693442, 0.26698295], 
-                std = [0.12035122, 0.12039929, 0.12037755],
-            )
-
-    elif name == 'seeingthroughfog_rgb_moderate': 
-        dataset_cfg = SeeingThroughFogRGBMediumCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-            print(ann_file)
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=12,
-                mean = [0.26694615, 0.26693442, 0.26698295], 
-                std = [0.12035122, 0.12039929, 0.12037755],
-            )
-
-    elif name == 'seeingthroughfog_rgb_hard': 
-        dataset_cfg = SeeingThroughFogRGBHardCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-            print(ann_file)
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=12,
-                mean = [0.26694615, 0.26693442, 0.26698295], 
-                std = [0.12035122, 0.12039929, 0.12037755],
-            )
-    
     elif name == 'seeingthroughfog_gated': 
         dataset_cfg = SeeingThroughFogGatedCfg()
         for s in splits:
@@ -209,70 +146,6 @@ def create_dataset(name, root, splits=('train', 'val')):
                 mean = [0.20945697, 0.20945697, 0.20945697], 
                 std = [0.15437697, 0.15437697, 0.15437697],
             )
-    
-    elif name == 'seeingthroughfog_gated_easy': 
-        dataset_cfg = SeeingThroughFogGatedEasyCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=10,
-                mean = [0.20945697, 0.20945697, 0.20945697], 
-                std = [0.15437697, 0.15437697, 0.15437697],
-            )
-
-    elif name == 'seeingthroughfog_gated_moderate': 
-        dataset_cfg = SeeingThroughFogGatedMediumCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=10,
-                mean = [0.20945697, 0.20945697, 0.20945697], 
-                std = [0.15437697, 0.15437697, 0.15437697],
-            )
-
-    elif name == 'seeingthroughfog_gated_hard': 
-        dataset_cfg = SeeingThroughFogGatedHardCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-
-            datasets[s] = XBitDetectionDatset(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-                mode=s, 
-                bits=10,
-                mean = [0.20945697, 0.20945697, 0.20945697], 
-                std = [0.15437697, 0.15437697, 0.15437697],
-            )
-  
     elif name == 'm3fd_rgb': 
         dataset_cfg = M3fdRGBCfg()
         for s in splits:
@@ -292,23 +165,6 @@ def create_dataset(name, root, splits=('train', 'val')):
 
     elif name == 'm3fd_thermal': 
         dataset_cfg = M3fdThermalCfg()
-        for s in splits:
-            if s not in dataset_cfg.splits:
-                raise RuntimeError(f'{s} split not found in config')
-            split_cfg = dataset_cfg.splits[s]
-            ann_file = root / split_cfg['ann_filename']
-            parser_cfg = CocoParserCfg(
-                ann_filename=ann_file,
-                has_labels=split_cfg['has_labels']
-            )
-
-            datasets[s] = dataset_cls(
-                data_dir=root / Path(split_cfg['img_dir']),
-                parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
-            )
-
-    elif name == 'flir_aligned': 
-        dataset_cfg = FlirAlignedCfg()
         for s in splits:
             if s not in dataset_cfg.splits:
                 raise RuntimeError(f'{s} split not found in config')

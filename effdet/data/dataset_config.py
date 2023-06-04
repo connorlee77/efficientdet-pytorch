@@ -23,178 +23,29 @@ class SeeingThroughFogRGBCfg(CocoCfg):
     variant: str = 'rgb'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-train.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-val.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-test.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
     ))
 
-@dataclass
-class SeeingThroughFogRGBEasyCfg(CocoCfg):
-    variant: str = 'rgb'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        # test=dict(
-        #     ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
-        #     img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename='/home/connor/cv_conversions/stf_labels/easy/all/test_clear.json', 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/snow_rain.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-    ))
-
-@dataclass
-class SeeingThroughFogRGBMediumCfg(CocoCfg):
-    variant: str = 'rgb'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/test_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/snow_rain.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-    ))
-
-@dataclass
-class SeeingThroughFogRGBHardCfg(CocoCfg):
-    variant: str = 'rgb'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/test_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/snow_rain.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
-    ))
 
 @dataclass
 class SeeingThroughFogGatedCfg(CocoCfg):
     variant: str = 'gated'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-train.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-val.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-test.json', 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-    ))
-
-@dataclass
-class SeeingThroughFogGatedEasyCfg(CocoCfg):
-    variant: str = 'gated'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        # test=dict(
-        #     ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/test_clear.json'), 
-        #     img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename='/home/connor/cv_conversions/stf_labels/easy/all/test_clear.json', 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/easy/all/snow_rain.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-    ))
-
-@dataclass
-class SeeingThroughFogGatedMediumCfg(CocoCfg):
-    variant: str = 'gated'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/test_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/moderate/all/snow_rain.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-    ))
-
-@dataclass
-class SeeingThroughFogGatedHardCfg(CocoCfg):
-    variant: str = 'gated'
-    splits: Dict[str, dict] = field(default_factory=lambda: dict(
-        train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/train_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/val_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/test_clear.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        lightfog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/light_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        densefog=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/dense_fog.json'), 
-            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
-        snowrain=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_json_0idx_DontCare/hard/all/snow_rain.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
     ))
 
