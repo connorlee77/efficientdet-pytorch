@@ -23,13 +23,13 @@ class SeeingThroughFogRGBCfg(CocoCfg):
     variant: str = 'rgb'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-train.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/rgb/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-val.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/rgb/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/rgb/stf-full-test.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/rgb/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
     ))
 
@@ -39,13 +39,13 @@ class SeeingThroughFogGatedCfg(CocoCfg):
     variant: str = 'gated'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-train.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/gated/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-val.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/gated/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/gated/stf-full-test.json', 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/gated/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
     ))
 
