@@ -23,13 +23,13 @@ class SeeingThroughFogRGBCfg(CocoCfg):
     variant: str = 'rgb'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/rgb/train_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/rgb/val_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/rgb/test_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
     ))
 
@@ -113,13 +113,13 @@ class SeeingThroughFogGatedCfg(CocoCfg):
     variant: str = 'gated'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/gated/train_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/gated/val_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'stf_coco_no_person/all/gated/test_clear.json'), 
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
     ))
 
