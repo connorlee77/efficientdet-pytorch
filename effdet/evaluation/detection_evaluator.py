@@ -317,7 +317,7 @@ class ObjectDetectionEvaluator(DetectionEvaluator):
 class PascalDetectionEvaluator(ObjectDetectionEvaluator):
     """A class to evaluation detections using PASCAL metrics."""
 
-    def __init__(self, categories, matching_iou_threshold=0.7):
+    def __init__(self, categories, matching_iou_threshold=0.5):
         super(PascalDetectionEvaluator, self).__init__(
             categories,
             matching_iou_threshold=matching_iou_threshold,

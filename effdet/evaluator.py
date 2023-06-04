@@ -287,7 +287,7 @@ class KittiEvaluator(Evaluator):
         result, ret_dict = kitti_eval(
             self.gt, 
             self.detections, 
-            current_classes=['Car'], 
+            current_classes=['Car', 'LargeVehicle', 'Person', 'Bike'], 
             eval_types=['bbox']
         )
         print(result)
@@ -303,8 +303,8 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
-    elif 'seeingthroughfog' in name:
-        return KittiEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
+    # elif 'seeingthroughfog' in name: # comment back in during eval mode, something doesn't play nice with anchor labeler during training
+    #     return KittiEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
         return OpenImagesEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     else:
