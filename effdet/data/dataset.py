@@ -163,6 +163,7 @@ class XBitDetectionDatset(data.Dataset):
                 
                 cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
+        os.makedirs('debug_val', exist_ok=True)
         cv2.imwrite('debug_val/{}.png'.format(img_info['file_name'].replace('tiff', '')), draw_img)
         exit(0)
         return img, target
