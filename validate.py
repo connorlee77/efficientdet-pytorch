@@ -172,11 +172,12 @@ def validate(args):
     last_idx = len(loader) - 1
     with torch.no_grad():
         for i, (input, target) in enumerate(loader):
+            pass
             # if i > 2:
             #     break
-            with amp_autocast():
-                output = bench(input, img_info=target)
-            evaluator.add_predictions(output, target)
+            # with amp_autocast():
+            #     output = bench(input, img_info=target)
+            # evaluator.add_predictions(output, target)
 
             # draw_img = np.uint8(255*(input[0].squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
             # small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
@@ -198,40 +199,54 @@ def validate(args):
             #             thickness=2,
             #         )
 
-            # for box in target['bbox'][0].cpu().numpy().reshape(-1, 4):
+            # image_idx = target['img_idx'].cpu().item()
+            # for box, cls in zip(target['bbox'][0].cpu().numpy().reshape(-1, 4), target['cls'][0].cpu().numpy().reshape(-1)):
             #     y1, x1, y2, x2 = box[:4].astype(int)
-            #     if -1 not in box:
-            #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                
+            #     if cls >= 1: 
+            #         class_id = stf_map[cls]
+            #         cv2.putText(
+            #             draw_img, 
+            #             '{}'.format(class_id), 
+            #             (x1, y1 - 10), 
+            #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            #             fontScale=1,
+            #             color=(255, 0, 255),
+            #             thickness=2,
+            #         )
+
+            #         if -1 not in box:
+            #             cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
             
             # cv2.imwrite('evalimg_rect_orig.png', small_draw_img)
-            # cv2.imwrite('evalimg_rect.png', draw_img)
-            # torchvision.utils.save_image(
-            #             input,
-            #             'evalimg.png',
-            #             padding=0,
-            #             normalize=True)
+            # cv2.imwrite('debug/{}.png'.format(str(image_idx).zfill(5)), draw_img)
+    #         torchvision.utils.save_image(
+    #                     input,
+    #                     'evalimg.png',
+    #                     padding=0,
+    #                     normalize=True)
 
-            # measure elapsed time
-            batch_time.update(time.time() - end)
-            end = time.time()
+    #         # measure elapsed time
+    #         batch_time.update(time.time() - end)
+    #         end = time.time()
 
-            if i % args.log_freq == 0 or i == last_idx:
-                print(
-                    'Test: [{0:>4d}/{1}]  '
-                    'Time: {batch_time.val:.3f}s ({batch_time.avg:.3f}s, {rate_avg:>7.2f}/s)  '
-                    .format(
-                        i, len(loader), batch_time=batch_time,
-                        rate_avg=input.size(0) / batch_time.avg)
-                )
+    #         if i % args.log_freq == 0 or i == last_idx:
+    #             print(
+    #                 'Test: [{0:>4d}/{1}]  '
+    #                 'Time: {batch_time.val:.3f}s ({batch_time.avg:.3f}s, {rate_avg:>7.2f}/s)  '
+    #                 .format(
+    #                     i, len(loader), batch_time=batch_time,
+    #                     rate_avg=input.size(0) / batch_time.avg)
+    #             )
 
-    mean_ap = 0.
-    if dataset.parser.has_labels:
-        mean_ap = evaluator.evaluate()
-    else:
-        evaluator.save(args.results)
+    # mean_ap = 0.
+    # if dataset.parser.has_labels:
+    #     mean_ap = evaluator.evaluate()
+    # else:
+    #     evaluator.save(args.results)
 
-    return mean_ap
+    # return mean_ap
 
 
 def main():
