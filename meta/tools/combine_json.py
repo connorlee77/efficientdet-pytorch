@@ -33,11 +33,11 @@ if __name__ == '__main__':
     if args.base_path is not None:
         base_path = args.base_path
     else:
-        base_path = "/Users/sriadityadeevi/Desktop/Spring Term Academics/Research/Week-10/efficientdet-pytorch/stf_labels/all/gated"
+        base_path = "/Users/sriadityadeevi/Desktop/Spring Term Academics/Research/Week-10/efficientdet-pytorch/meta/STF/gated"
     if args.write_path is not None:
         write_path = args.write_path
     else:
-        write_path = "/Users/sriadityadeevi/Desktop/Spring Term Academics/Research/Week-10/efficientdet-pytorch/meta/gated"
+        write_path = "/Users/sriadityadeevi/Desktop/Spring Term Academics/Research/Week-10/efficientdet-pytorch/meta/temp/correct/gated"
 
     
     json_list = []
