@@ -143,7 +143,7 @@ class XBitDetectionDatset(data.Dataset):
             img = np.stack([img]*3, axis=2)
         else:
             img = img[:,:,::-1]
-        # img, target = self.fixed_transform(img, target)
+        img, target1 = self.fixed_transform(img, target)
         # print(target)
         # draw_img = img.transpose(1, 2, 0)
         draw_img = cv2.imread(img_path, -1) / (2**self.bits - 1) * 255
@@ -165,8 +165,8 @@ class XBitDetectionDatset(data.Dataset):
 
         os.makedirs('debug_val', exist_ok=True)
         cv2.imwrite('debug_val/{}.png'.format(img_info['file_name'].replace('tiff', '')), draw_img)
-        exit(0)
-        return img, target
+        # exit(0)
+        return img, target1
 
     def __len__(self):
         return len(self._parser.img_ids)
