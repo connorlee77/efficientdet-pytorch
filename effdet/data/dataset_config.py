@@ -19,6 +19,36 @@ class CocoCfg:
     splits: Dict[str, dict] = None
 
 @dataclass
+class SeeingThroughFogRGBAllCfg(CocoCfg):
+    variant: str = 'all'
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-train.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+        val=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-val.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+        test=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-test.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+    ))
+
+@dataclass
+class SeeingThroughFogGatedAllCfg(CocoCfg):
+    variant: str = 'gated'
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-train.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+        val=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-val.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+        test=dict(
+            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-test.json', 
+            img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+    ))
+
+@dataclass
 class SeeingThroughFogRGBCfg(CocoCfg):
     variant: str = 'rgb'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(

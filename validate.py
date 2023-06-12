@@ -199,7 +199,7 @@ def validate(args):
                         thickness=2,
                     )
 
-            image_idx = target['img_idx'].cpu().item()
+            image_idx = target['img_idx'][0].cpu().item()
             for box, cls in zip(target['bbox'][0].cpu().numpy().reshape(-1, 4), target['cls'][0].cpu().numpy().reshape(-1)):
                 y1, x1, y2, x2 = box[:4].astype(int)
                 
