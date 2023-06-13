@@ -179,48 +179,48 @@ def validate(args):
                 output = bench(input, img_info=target)
             evaluator.add_predictions(output, target)
 
-            draw_img = np.uint8(255*(input[0].squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
-            small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
-            for box in output[0].cpu().numpy().reshape(-1, 6):
+            # draw_img = np.uint8(255*(input[0].squeeze().cpu().numpy().transpose(1, 2, 0)*0.12039929 + 0.26693442)).copy()
+            # small_draw_img = cv2.resize(draw_img, (1280, 1280)) # must be original size of image
+            # for box in output[0].cpu().numpy().reshape(-1, 6):
                 
-                if box[4] > 0.6:
-                    x1, y1, x2, y2 = box[:4].astype(int)
-                    cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
+            #     if box[4] > 0.6:
+            #         x1, y1, x2, y2 = box[:4].astype(int)
+            #         cv2.rectangle(small_draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
-                    conf = box[4]
-                    class_id = stf_map[box[5]]
-                    cv2.putText(
-                        small_draw_img, 
-                        '{}: {:.2f}'.format(class_id, conf), 
-                        (x1, y1 - 10), 
-                        fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                        fontScale=1,
-                        color=(255, 0, 255),
-                        thickness=2,
-                    )
+            #         conf = box[4]
+            #         class_id = stf_map[box[5]]
+            #         cv2.putText(
+            #             small_draw_img, 
+            #             '{}: {:.2f}'.format(class_id, conf), 
+            #             (x1, y1 - 10), 
+            #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            #             fontScale=1,
+            #             color=(255, 0, 255),
+            #             thickness=2,
+            #         )
 
-            image_idx = target['img_idx'][0].cpu().item()
-            for box, cls in zip(target['bbox'][0].cpu().numpy().reshape(-1, 4), target['cls'][0].cpu().numpy().reshape(-1)):
-                y1, x1, y2, x2 = box[:4].astype(int)
+            # image_idx = target['img_idx'][0].cpu().item()
+            # for box, cls in zip(target['bbox'][0].cpu().numpy().reshape(-1, 4), target['cls'][0].cpu().numpy().reshape(-1)):
+            #     y1, x1, y2, x2 = box[:4].astype(int)
                 
-                if cls >= 1: 
-                    class_id = stf_map[cls]
-                    cv2.putText(
-                        draw_img, 
-                        '{}'.format(class_id), 
-                        (x1, y1 - 10), 
-                        fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                        fontScale=1,
-                        color=(255, 0, 255),
-                        thickness=2,
-                    )
+            #     if cls >= 1: 
+            #         class_id = stf_map[cls]
+            #         cv2.putText(
+            #             draw_img, 
+            #             '{}'.format(class_id), 
+            #             (x1, y1 - 10), 
+            #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            #             fontScale=1,
+            #             color=(255, 0, 255),
+            #             thickness=2,
+            #         )
 
-                    if -1 not in box:
-                        cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+            #         if -1 not in box:
+            #             cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
-            os.makedirs('debug_val', exist_ok=True)
-            cv2.imwrite('debug_val/{}_pred.png'.format(str(image_idx).zfill(5)), small_draw_img)
-            cv2.imwrite('debug_val/{}.png'.format(str(image_idx).zfill(5)), draw_img)
+            # os.makedirs('debug_val', exist_ok=True)
+            # cv2.imwrite('debug_val/{}_pred.png'.format(str(image_idx).zfill(5)), small_draw_img)
+            # cv2.imwrite('debug_val/{}.png'.format(str(image_idx).zfill(5)), draw_img)
             # torchvision.utils.save_image(
             #             input,
             #             'evalimg.png',

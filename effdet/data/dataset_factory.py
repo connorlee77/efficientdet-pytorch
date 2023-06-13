@@ -104,7 +104,7 @@ def create_dataset(name, root, splits=('train', 'val')):
                 data_dir=root / Path(split_cfg['img_dir']),
                 parser=create_parser(dataset_cfg.parser, cfg=parser_cfg),
             )
-    elif name == 'seeingthroughfog_rgb_all': 
+    elif 'seeingthroughfog_rgb_all' in name: 
         dataset_cfg = SeeingThroughFogRGBAllCfg()
         for s in splits:
             if s not in dataset_cfg.splits:
@@ -124,7 +124,7 @@ def create_dataset(name, root, splits=('train', 'val')):
                 mean = [0.26694615, 0.26693442, 0.26698295], 
                 std = [0.12035122, 0.12039929, 0.12037755],
             )
-    elif name == 'seeingthroughfog_gated_all': 
+    elif 'seeingthroughfog_gated_all' in name: 
         dataset_cfg = SeeingThroughFogGatedAllCfg()
         for s in splits:
             if s not in dataset_cfg.splits:
