@@ -155,6 +155,34 @@ class DetBenchTrain(nn.Module):
         return output
 
 
+class ClsBenchPredict(nn.Module):
+    def __init__(self, model):
+        super(ClsBenchPredict, self).__init__()
+        self.model = model
+        self.config = model.config  # FIXME remove this when we can use @property (torchscript limitation)
+
+    def forward(self, x, img_info: Optional[Dict[str, torch.Tensor]] = None):
+        _, _, image_class_out = self.model(x)
+        output = torch.softmax(image_class_out, dim=1)
+        return output
+    
+class ClsBenchTrain(nn.Module):
+    def __init__(self, model):
+        super(ClsBenchTrain, self).__init__()
+        self.model = model
+        self.config = model.config  # FIXME remove this when we can use @property (torchscript limitation)
+        self.loss_fn = nn.CrossEntropyLoss()
+
+    def forward(self, x, target: Dict[str, torch.Tensor]):
+        _, _, image_class_out = self.model(x)
+        loss = self.loss_fn(image_class_out, target['img_scene'])
+        output = {'loss': loss}
+        if not self.training:
+            # if eval mode, output detections for evaluation
+            output['classifications'] = image_class_out        
+        return output
+
+
 def unwrap_bench(model):
     # Unwrap a model in support bench so that various other fns can access the weights and attribs of the
     # underlying model directly

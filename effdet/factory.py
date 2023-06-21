@@ -1,5 +1,5 @@
-from .efficientdet import EfficientDet, HeadNet
-from .bench import DetBenchTrain, DetBenchPredict
+from .efficientdet import EfficientDet, HeadNet, EfficientDetwithCls
+from .bench import DetBenchTrain, DetBenchPredict, ClsBenchTrain, ClsBenchPredict
 from .config import get_efficientdet_config
 from .helpers import load_pretrained, load_checkpoint
 
@@ -36,7 +36,10 @@ def create_model_from_config(
     #     config.update({'image_size': (image_size, image_size)})
     #     print('Updating image size to {}'.format(image_size))
     # create the base model
-    model = EfficientDet(config, pretrained_backbone=pretrained_backbone, **kwargs)
+    if bench_task == 'train_cls' or bench_task == 'predict_cls':
+        model = EfficientDetwithCls(config, pretrained_backbone=pretrained_backbone, **kwargs)
+    else:
+        model = EfficientDet(config, pretrained_backbone=pretrained_backbone, **kwargs)
 
     # pretrained weights are always spec'd for original config, load them before we change the model
     if pretrained:
@@ -51,11 +54,18 @@ def create_model_from_config(
     # load an argument specified training checkpoint
     if checkpoint_path:
         print('loading user specified checkpoint path...')
-        load_checkpoint(model, checkpoint_path, use_ema=checkpoint_ema)
+        if bench_task == 'train_cls' or bench_task == 'predict_cls':
+            load_checkpoint(model, checkpoint_path, use_ema=checkpoint_ema, strict=False)
+        else:
+            load_checkpoint(model, checkpoint_path, use_ema=checkpoint_ema)
 
     # wrap model in task specific training/prediction bench if set
     if bench_task == 'train':
         model = DetBenchTrain(model, create_labeler=labeler)
     elif bench_task == 'predict':
         model = DetBenchPredict(model)
+    elif bench_task == 'train_cls':
+        model = ClsBenchTrain(model)
+    elif bench_task == 'predict_cls':
+        model = ClsBenchPredict(model)
     return model

@@ -205,6 +205,8 @@ parser.add_argument('--tta', type=int, default=0, metavar='N',
                     help='Test/inference time augmentation (oversampling) factor. 0=None (default: 0)')
 parser.add_argument("--local_rank", default=0, type=int)
 
+parser.add_argument('--bench-task', default='train', type=str, help='bench task w or w/o classification')
+
 
 def _parse_args():
     # Do we have a config file to parse?
@@ -287,7 +289,7 @@ def main():
             extra_args = dict(image_size=(args.image_size, args.image_size))
         model = create_model(
             args.model,
-            bench_task='train',
+            bench_task=args.bench_task,
             num_classes=args.num_classes,
             pretrained=args.pretrained,
             pretrained_backbone=args.pretrained_backbone,
@@ -430,14 +432,16 @@ def main():
                     logging.info("Distributing BatchNorm running means and vars")
                 distribute_bn(model, args.world_size, args.dist_bn == 'reduce')
 
-            # the overhead of evaluating with coco style datasets is fairly high, so just ema or non, not both
-            if model_ema is not None:
-                if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
-                    distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
-
-                eval_metrics = validate(model_ema.module, loader_eval, args, evaluator, log_suffix=' (EMA)')
+            if args.bench_task == 'train_cls':
+                eval_metrics = validate_cls(model, loader_eval, args)
             else:
-                eval_metrics = validate(model, loader_eval, args, evaluator)
+                # the overhead of evaluating with coco style datasets is fairly high, so just ema or non, not both
+                if model_ema is not None:
+                    if args.distributed and args.dist_bn in ('broadcast', 'reduce'):
+                        distribute_bn(model_ema, args.world_size, args.dist_bn == 'reduce')
+                    eval_metrics = validate(model_ema.module, loader_eval, args, evaluator, log_suffix=' (EMA)')
+                else:
+                    eval_metrics = validate(model, loader_eval, args, evaluator)
 
             if lr_scheduler is not None:
                 # step LR for next epoch
@@ -667,6 +671,48 @@ def validate(model, loader, args, evaluator=None, log_suffix=''):
     metrics = OrderedDict([('loss', losses_m.avg)])
     if evaluator is not None:
         metrics['map'] = evaluator.evaluate()
+
+    return metrics
+
+def validate_cls(model, loader, args, log_suffix=''):
+    batch_time_m = AverageMeter()
+    losses_m = AverageMeter()
+    acc_m = AverageMeter()
+
+    model.eval()
+
+    end = time.time()
+    last_idx = len(loader) - 1
+    with torch.no_grad():
+        for batch_idx, (input, target) in enumerate(loader):
+            last_batch = batch_idx == last_idx
+
+            output = model(input, target)
+            loss = output['loss']
+            acc = accuracy(output['classifications'], target['img_scene'])
+
+            if args.distributed:
+                reduced_loss = reduce_tensor(loss.data, args.world_size)
+            else:
+                reduced_loss = loss.data
+
+            torch.cuda.synchronize()
+
+            losses_m.update(reduced_loss.item(), input.size(0))
+            acc_m.update(acc[0].item(), input.size(0))
+
+            batch_time_m.update(time.time() - end)
+            end = time.time()
+            if args.local_rank == 0 and (last_batch or batch_idx % args.log_interval == 0):
+                log_name = 'Test' + log_suffix
+                logging.info(
+                    '{0}: [{1:>4d}/{2}]  '
+                    'Time: {batch_time.val:.3f} ({batch_time.avg:.3f})  '
+                    'Loss: {loss.val:>7.4f} ({loss.avg:>6.4f})  '
+                    'Acc: {acc.val:>7.4f} ({acc.avg:>6.4f})  '.format(
+                        log_name, batch_idx, last_idx, batch_time=batch_time_m, loss=losses_m, acc=acc_m))
+
+    metrics = OrderedDict([('loss', losses_m.avg), ('acc', acc_m.avg)])
 
     return metrics
 
