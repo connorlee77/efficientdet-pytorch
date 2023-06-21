@@ -75,6 +75,13 @@ class DetectionDatset(data.Dataset):
     def transform(self, t):
         self._transform = t
 
+stf_map = {
+    1 : 'LargeVehicle',
+    2 : 'Person',
+    3 : 'Car',
+    4 : 'Bike',
+}
+
 IMAGENET_DEFAULT_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_DEFAULT_STD = (0.229, 0.224, 0.225)
 class XBitDetectionDatset(data.Dataset):
@@ -142,11 +149,25 @@ class XBitDetectionDatset(data.Dataset):
         img, target = self.fixed_transform(img, target)
         # print(target)
         # draw_img = img.transpose(1, 2, 0)
-        # for box in target['bbox']:
-        #     y1, x1, y2, x2 = box.astype(int)
-            # cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+        # draw_img = cv2.imread(img_path, -1) / (2**self.bits - 1) * 255
+        # for box, cls in zip(target['bbox'], target['cls']):
+        #     if cls >= 1: 
+        #         class_id = stf_map[cls]
+        #         y1, x1, y2, x2 = box.astype(int)
+        #         cv2.putText(
+        #             draw_img, 
+        #             '{}'.format(class_id), 
+        #             (x1, y1 - 10), 
+        #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        #             fontScale=1,
+        #             color=(255, 0, 255),
+        #             thickness=2,
+        #         )
+                
+        #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
-        # cv2.imwrite('testimg.png', draw_img)
+        # os.makedirs('debug_val', exist_ok=True)
+        # cv2.imwrite('debug_val/{}.png'.format(img_info['file_name'].replace('tiff', '')), draw_img)
         # exit(0)
         return img, target
 

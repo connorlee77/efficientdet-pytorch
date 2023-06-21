@@ -3,6 +3,7 @@
 
 Hacked together by Ross Wightman (https://github.com/rwightman)
 """
+import os
 import argparse
 import time
 import torch
@@ -198,14 +199,28 @@ def validate(args):
             #             thickness=2,
             #         )
 
-            # for box in target['bbox'][0].cpu().numpy().reshape(-1, 4):
+            # image_idx = target['img_idx'][0].cpu().item()
+            # for box, cls in zip(target['bbox'][0].cpu().numpy().reshape(-1, 4), target['cls'][0].cpu().numpy().reshape(-1)):
             #     y1, x1, y2, x2 = box[:4].astype(int)
-            #     if -1 not in box:
-            #         cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                
+            #     if cls >= 1: 
+            #         class_id = stf_map[cls]
+            #         cv2.putText(
+            #             draw_img, 
+            #             '{}'.format(class_id), 
+            #             (x1, y1 - 10), 
+            #             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            #             fontScale=1,
+            #             color=(255, 0, 255),
+            #             thickness=2,
+            #         )
 
-            
-            # cv2.imwrite('evalimg_rect_orig.png', small_draw_img)
-            # cv2.imwrite('evalimg_rect.png', draw_img)
+            #         if -1 not in box:
+            #             cv2.rectangle(draw_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+            # os.makedirs('debug_val', exist_ok=True)
+            # cv2.imwrite('debug_val/{}_pred.png'.format(str(image_idx).zfill(5)), small_draw_img)
+            # cv2.imwrite('debug_val/{}.png'.format(str(image_idx).zfill(5)), draw_img)
             # torchvision.utils.save_image(
             #             input,
             #             'evalimg.png',
