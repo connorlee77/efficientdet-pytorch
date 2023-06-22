@@ -136,13 +136,13 @@ class FlirAlignedRGBCfg(CocoCfg):
     variant: str = ''
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/flir_train.json'), 
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/rgb-train-flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
         val=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/flir_val.json'), 
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/rgb-val-flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
         test=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/flir.json'), 
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/rgb-test-flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/data'), has_labels=True)
     ))
 

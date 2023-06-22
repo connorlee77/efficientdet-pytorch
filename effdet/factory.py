@@ -6,9 +6,10 @@ from .helpers import load_pretrained, load_checkpoint
 
 def create_model(
         model_name, bench_task='', num_classes=None, pretrained=False,
-        checkpoint_path='', checkpoint_ema=False, **kwargs):
+        checkpoint_path='', checkpoint_ema=False, num_scenes=None, **kwargs):
 
     config = get_efficientdet_config(model_name)
+    config.num_scenes = num_scenes
     return create_model_from_config(
         config, bench_task=bench_task, num_classes=num_classes, pretrained=pretrained,
         checkpoint_path=checkpoint_path, checkpoint_ema=checkpoint_ema, **kwargs)

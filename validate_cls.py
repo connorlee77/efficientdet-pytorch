@@ -55,6 +55,8 @@ add_bool_arg(parser, 'redundant-bias', default=None,
 add_bool_arg(parser, 'soft-nms', default=None, help='override model config for soft-nms')
 parser.add_argument('--num-classes', type=int, default=None, metavar='N',
                     help='Override num_classes in model config if set. For fine-tuning from pretrained.')
+parser.add_argument('--num-scenes', type=int, default=None, metavar='N',
+                    help='Number of scene categories in dataset. For fusion module initialization.')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('-b', '--batch-size', default=128, type=int,
@@ -124,6 +126,7 @@ def validate(args):
             soft_nms=args.soft_nms,
             checkpoint_path=args.checkpoint,
             checkpoint_ema=args.use_ema,
+            num_scenes=args.num_scenes,
             **extra_args,
         )
     model_config = bench.config

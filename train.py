@@ -72,6 +72,8 @@ parser.add_argument('--val-skip', type=int, default=0, metavar='N',
                     help='Skip every N validation samples.')
 parser.add_argument('--num-classes', type=int, default=None, metavar='N',
                     help='Override num_classes in model config if set. For fine-tuning from pretrained.')
+parser.add_argument('--num-scenes', type=int, default=None, metavar='N',
+                    help='Number of scene categories in dataset. For fusion module initialization.')
 parser.add_argument('--pretrained', action='store_true', default=False,
                     help='Start with pretrained version of specified network (if avail)')
 parser.add_argument('--no-pretrained-backbone', action='store_true', default=False,
@@ -300,6 +302,7 @@ def main():
             soft_nms=args.soft_nms,
             bench_labeler=args.bench_labeler,
             checkpoint_path=args.initial_checkpoint,
+            num_scenes=args.num_scenes,
             **extra_args,
         )
     model_config = model.config  # grab before we obscure with DP/DDP wrappers
