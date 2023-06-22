@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from typing import Dict
 
 # This is where all the data is. Place json folder in this directory
-SEEING_THROUGH_FOG_DATA_DIR = '/data/SeeingThroughFogDerived/rgb_gated_aligned/'
+SEEING_THROUGH_FOG_DATA_DIR = '/media/hdd2/rgb_gated_aligned/'
 FLIR_ALIGNED_DATA_DIR = "/home/ganlu/workspace/FLIR_Aligned/"
 
 
@@ -23,13 +23,13 @@ class SeeingThroughFogRGBAllCfg(CocoCfg):
     variant: str = 'all'
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-train.json', 
+            ann_filename='/home/ganlu/workspace/efficientdet-pytorch/meta/STF_scenes/all/stf-full-train.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         val=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-val.json', 
+            ann_filename='/home/ganlu/workspace/efficientdet-pytorch/meta/STF_scenes/all/stf-full-val.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
         test=dict(
-            ann_filename='/home/connor/repos/efficientdet-pytorch/meta/STF/all/stf-full-test.json', 
+            ann_filename='/home/ganlu/workspace/efficientdet-pytorch/meta/STF_scenes/all/stf-full-test.json', 
             img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
     ))
 

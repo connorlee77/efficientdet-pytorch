@@ -135,7 +135,7 @@ class XBitDetectionDatset(data.Dataset):
             tuple: Tuple (image, annotations (target)).
         """
         img_info = self._parser.img_infos[index]
-        target = dict(img_idx=index, img_size=(img_info['width'], img_info['height']))
+        target = dict(img_idx=index, img_size=(img_info['width'], img_info['height']), img_scene=img_info['scene'])
         if self._parser.has_labels:
             ann = self._parser.get_ann_info(index)
             target.update(ann)
