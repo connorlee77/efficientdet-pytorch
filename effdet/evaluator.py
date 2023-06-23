@@ -303,7 +303,7 @@ def create_evaluator(name, dataset, distributed=False, pred_yxyx=False):
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'flir' in name:
         return CocoEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
-    elif 'seeingthroughfog' in name and 'eval' in name: # comment back in during eval mode, something doesn't play nice with anchor labeler during training
+    elif 'stf' in name: # comment back in during eval mode, something doesn't play nice with anchor labeler during training
         return KittiEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
     elif 'openimages' in name:
         return OpenImagesEvaluator(dataset, distributed=distributed, pred_yxyx=pred_yxyx)
