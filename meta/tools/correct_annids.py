@@ -39,7 +39,7 @@ if __name__ == '__main__':
         base_path = args.base_path
 
     else:
-        base_path = "/Users/sriadityadeevi/Desktop/Spring Term Academics/Research/Week-10/efficientdet-pytorch/meta/STF/gated"
+        base_path = "/Users/sriadityadeevi/Desktop/CALTECH/Spring Term Academics/Research/Week-10/efficientdet-pytorch/meta/STF/all/clear"
 
     json_file_names = [filename for filename in os.listdir(base_path) if filename.endswith('.json')]
 
