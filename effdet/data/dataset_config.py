@@ -18,6 +18,79 @@ class CocoCfg:
     num_classes: int = 80
     splits: Dict[str, dict] = None
 
+
+@dataclass
+class StfClearRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/test_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'cam_stereo_left_rect_aligned'), has_labels=True),
+    ))
+
+@dataclass
+class StfLightFogRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/light_fog.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+    ))
+
+@dataclass
+class StfDenseFogRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/dense_fog.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+    ))
+
+@dataclass
+class StfSnowRainRGBCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/snow_rain.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'cam_stereo_left_rect_aligned', has_labels=True),
+    ))
+
+@dataclass
+class StfClearGCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/test_clear.json', img_dir=os.path.join(SEEING_THROUGH_FOG_DATA_DIR, 'gated_full_acc_rect_aligned'), has_labels=True),
+    ))
+
+@dataclass
+class StfLightFogGCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/light_fog.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+    ))
+
+@dataclass
+class StfDenseFogGCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/dense_fog.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+    ))
+
+@dataclass
+class StfSnowRainGCfg(CocoCfg):
+    variant: str = ''
+    splits: Dict[str, dict] = field(default_factory=lambda: dict(
+        train=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/train_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        val=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/val_clear.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+        test=dict(ann_filename=SEEING_THROUGH_FOG_DATA_DIR+'meta/STF/all/all/snow_rain.json', img_dir=SEEING_THROUGH_FOG_DATA_DIR+'gated_full_acc_rect_aligned', has_labels=True),
+    ))
+
 @dataclass
 class SeeingThroughFogRGBAllCfg(CocoCfg):
     variant: str = 'all'
@@ -121,11 +194,11 @@ class FlirAlignedThermalCfg(CocoCfg):
     variant: str = ''
     splits: Dict[str, dict] = field(default_factory=lambda: dict(
         train=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir_train.json'), 
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/data'), has_labels=True),
         val=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/flir_val.json'), 
-            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_train/data'), has_labels=True),
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/flir.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/data'), has_labels=True),
         test=dict(
             ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_thermal_test/data'), has_labels=True)
@@ -139,8 +212,8 @@ class FlirAlignedRGBCfg(CocoCfg):
             ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/rgb-train-flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
         val=dict(
-            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/rgb-val-flir.json'), 
-            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_train/data'), has_labels=True),
+            ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/rgb-test-flir.json'), 
+            img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/data'), has_labels=True),
         test=dict(
             ann_filename=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/rgb-test-flir.json'), 
             img_dir=os.path.join(FLIR_ALIGNED_DATA_DIR, 'images_rgb_test/data'), has_labels=True)

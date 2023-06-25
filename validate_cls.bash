@@ -8,6 +8,6 @@
 # -b 8 --results flir_rgb_test_cls.txt --split test
 
 export CUDA_VISIBLE_DEVICES=1
-python validate_cls.py root='' --dataset=seeingthroughfog_rgb_all --model efficientdetv2_dt --workers 8 \
---checkpoint /home/ganlu/workspace/efficientdet-pytorch/output/train/stf-rgb-backbone-cls/model_best.pth.tar --num-classes=4 --num-scenes=7 \
+python validate_cls.py root='' --dataset=stf_clear_rgb --model efficientdetv2_dt --workers 8 \
+--checkpoint /home/ganlu/workspace/efficientdet-pytorch/output/train/stf-rgb-backbone-cls/model_best.pth.tar --num-classes=4 --num-scenes=3 \
 -b 12 --results stf_rgb_test_cls.txt --split test --img-size 1280
