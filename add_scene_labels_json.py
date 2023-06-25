@@ -2,10 +2,17 @@ import os
 import json
 import glob
 
-filepath = 'meta/STF/all/stf-full-val.json'
+fps = glob.glob('stf_jsons_with_scene_idx/all/all/*.json')
 
-save_folder = 'meta/STF_scenes/all/'
-save_name = os.path.join(save_folder, os.path.basename(filepath))
+new_fps = []
+for f in fps:
+    if 'rain' not in f:
+        new_fps.append(f)
+fps = new_fps
+
+
+
+save_folder = 'stf_jsons_with_scene_idx_fix/all/all'
 os.makedirs(save_folder, exist_ok=True)
 
 split_files = glob.glob('/data/SeeingThroughFog/splits/*_day.txt') + glob.glob('/data/SeeingThroughFog/splits/*_night.txt')
@@ -28,6 +35,8 @@ scene_dict = {
     
     'snow_day' : 5, 
     'snow_night' : 6,
+
+    # 'rain' : 7,
 }
 
 
@@ -45,19 +54,22 @@ def create_scene_mapping():
                 mapping[id] = idx
     return mapping
 
-
 mapping = create_scene_mapping()
 
-data = None
-with open(filepath, 'r') as f:
-    data = json.load(f)
-    image_list = data['images']
-    for entry in image_list:
-        id = entry['id']
-        scene_id = mapping[id]
-        print(id)
-        entry['scene'] = scene_id
 
-with open(save_name, 'w') as f:
-    print(data['images'])
-    json.dump(data, f)
+for filepath in fps:
+    save_name = os.path.join(save_folder, os.path.basename(filepath))
+    
+    data = None
+    with open(filepath, 'r') as f:
+        data = json.load(f)
+        image_list = data['images']
+        print(filepath)
+        for entry in image_list:
+            id = entry['id']
+            scene_id = mapping[id]
+            entry['scene'] = scene_id
+
+    with open(save_name, 'w') as f:
+        print(data['images'])
+        json.dump(data, f)
